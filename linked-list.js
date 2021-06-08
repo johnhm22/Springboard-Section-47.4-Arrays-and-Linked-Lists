@@ -19,7 +19,6 @@ class LinkedList {
   }
 
   /** push(val): add new value to end of list. */
-
   push(val) {
     const newNode = new Node(val);
 
@@ -36,7 +35,6 @@ class LinkedList {
 
 
   /** unshift(val): add new value to start of list. */
-
   unshift(val) {
     const newNode = new Node(val);
 
@@ -49,22 +47,37 @@ class LinkedList {
     this.length += 1;
   }
 
+  getNodeAt(idx) {
+    let currentNode = this.head;
+    let count = 0;
+    while(currentNode){
+      if(count === idx){
+        return currentNode
+      }
+      currentNode = currentNode.next
+      count ++;
+    }
+  }
+
+
   /** pop(): return & remove last item. */
-
-/*
-Removing from the end of a singly linked list is not constant time. To remove the last node, we don't have a way of setting the tail to be the node preceding the current tail. We need to fully traverse the list until we find what is right before the tail. 
-*/
-
 // Remove & return tail value. Throws error if list is empty.
-
   pop() {
-    if(this.head = null){
+    if(this.head === null){
       throw "List is empty";
     }
 
-    let prev = this._get(this.length - 2);
+    if(this.length === 1){
+      let value = this.head.val;
+      this.head = null;
+      this.tail = null;
+      this.length -= 1;
+      return value;
+    }
+
     
-    console.log("prev", prev); //this is coming back as null
+    let prev = this.getNodeAt(this.length - 2);
+    
     let val = prev.next.val
     prev.next = null;
     this.tail = prev;
@@ -72,20 +85,7 @@ Removing from the end of a singly linked list is not constant time. To remove th
     return val;
   }
 
-  _get(idx) {
-    let cur = this.head;
-    let count = 0;
-
-    while (cur !== null && count != idx) {
-      count += 1;
-      cur = cur.next;
-    }
-
-    return cur;
-  }
-
   /** shift(): return & remove first item. */
-
   shift() {
     let firstNode = this.head.val;
     this.head = this.head.next
@@ -95,7 +95,6 @@ Removing from the end of a singly linked list is not constant time. To remove th
   }
 
   /** getAt(idx): get val at idx. */
-
   getAt(idx) {
   //traverse
     let currentNode = this.head;
@@ -105,19 +104,6 @@ Removing from the end of a singly linked list is not constant time. To remove th
       count ++;
     } return currentNode.val;
   }
-
-  //ignore for the moment
-  // getNodeAt(idx) {
-  //   let currentNode = this.head;
-  //   let count = 0;
-  //   while(currentNode){
-  //     if(count === idx){
-  //       return currentNode
-  //     }
-  //     currentNode = currentNode.next
-  //     count ++;
-  //   }
-  // }
 
   /** setAt(idx, val): set val at idx to val */
 
@@ -133,7 +119,6 @@ Removing from the end of a singly linked list is not constant time. To remove th
 
   /** insertAt(idx, val): add node w/val before idx. */
   // Insert a new node at position idx with value val. Throws error if index is invalid. Returns undefined.
-
   insertAt(idx, val) {
     if(idx < 0 || idx > this.length){
       throw "Index is not valid";
@@ -165,7 +150,6 @@ Removing from the end of a singly linked list is not constant time. To remove th
 
   /** removeAt(idx): return & remove item at idx, */
   // Remove & return value at position idx. Throws error if index is invalid.
-
   removeAt(idx) {
     if(idx < 0 || idx > this.length){
       throw "Index is not valid";
@@ -203,7 +187,6 @@ Removing from the end of a singly linked list is not constant time. To remove th
   }
 
   /** average(): return an average of all values in the list */
-
   average() {
         if(!this.head){
           return 0;
